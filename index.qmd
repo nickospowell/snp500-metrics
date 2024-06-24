@@ -56,11 +56,16 @@ financials_filtered <- financials |>
 #| label: market_cap_to_eps
 #| message: false
 
+#fix the scale
+
 f <- financials_filtered |>
 ggplot(aes(x = market_cap,
            y = percent_eps)) +
-geom_point(alpha = 0.5, size = 0.7, color = "blue") +
+geom_point(alpha = 0.5, size = 0.7) +
 facet_wrap(~sector) +
+geom_smooth(se = FALSE,
+            formula = 'y ~ x',
+            method = lm) +
  scale_x_continuous(labels = label_dollar(scale = 1/10^9,                              suffix = "B"),
                     breaks = seq(0, 200e12, by = 200e9)) +
  scale_y_continuous(labels = scales::percent) +
