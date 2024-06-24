@@ -1,7 +1,77 @@
 ---
-title: "."
+title: "Financial Metrics of S&P 500 Companies"
+execute:
+  echo: FALSE
 ---
+**Overview**
 
-This is a Quarto website.
+Financial metrics, numbers used to evaluate the performance of stocks, vary significantly by industry. This was sourced from a dataset using data from S&P 500 companies in the July 2020. Relevant columns were used to analyze the relationship between slower and faster growing sectors and two popular financial metrics: market capitalization and earnings per share. The analysis found that slower growing sectors such as consumer staples experience less volatility in earnings, but have lower market capitalizations.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+**What is the S&P 500?**
+
+The S&P 500 is one of the most widely-used US stock market indexes. It includes 503 leading publicly traded companies in the US, and has been used to provide insight into the direction of the stock market as a whole.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(scales)
+library(plotly)
+
+financials <- 
+read_csv("financials.csv") |>
+janitor::clean_names() |>
+mutate(percent_eps = earnings_share / price)
+
+#removed outliers to better visualize eps
+Q1 <- quantile(financials$percent_eps, 0.25, na.rm = TRUE)
+Q3 <- quantile(financials$percent_eps, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower <- Q1 - 1.5 * IQR
+upper <- Q3 + 1.5 * IQR
+
+#removed outliers for price_earnings
+Q1 <- quantile(financials$price_earnings, 0.25, na.rm = TRUE)
+Q3 <- quantile(financials$price_earnings, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower1 <- Q1 - 1.5 * IQR
+upper1 <- Q3 + 1.5 * IQR
+
+#removed outliers for price_book 
+Q1 <- quantile(financials$price_book, 0.25, na.rm = TRUE)
+Q3 <- quantile(financials$price_book, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower2 <- Q1 - 1.5 * IQR
+upper2 <- Q3 + 1.5 * IQR
+
+#removing all outliers
+financials_filtered <- financials |>
+  filter(percent_eps >= lower, percent_eps <= upper,
+         price_earnings >= lower1, price_earnings <=              upper1, price_book >= lower2, price_book <=              upper2)
+
+```
+
+```{r}
+#| label: market_cap_to_eps
+#| message: false
+
+f <- financials_filtered |>
+ggplot(aes(x = market_cap,
+           y = percent_eps)) +
+geom_point(alpha = 0.5, size = 0.7, color = "blue") +
+facet_wrap(~sector) +
+ scale_x_continuous(labels = label_dollar(scale = 1/10^9,                              suffix = "B"),
+                    breaks = seq(0, 200e12, by = 200e9)) +
+ scale_y_continuous(labels = scales::percent) +
+labs(title = "Market Cap vs Earnings per Share by Sector",
+     subtitle = "Earnings per share does not increase with market cap or sector",
+     x = "Market Capitalization in Billions of Dollars",
+     y = "Percent Earnings per Share", 
+     color = "Sector") +
+theme_minimal() +
+theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ggplotly(f)
+```
+

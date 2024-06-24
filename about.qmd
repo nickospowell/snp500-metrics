@@ -2,4 +2,12 @@
 title: "About"
 ---
 
-About this site
+**About Me**
+
+My name is Lela Sengupta. I'm a rising freshman at Tufts University interested in finance and international relations. You can take a look at my Github [here](https://github.com/lelasengupta) and reach me at [lelasen06\@gmail.com](lelasen06@gmail.com).
+
+**About this Project**
+
+This project compares the financial metrics of stocks in the S&P 500 by sector. My code can be found in this [repository](https://github.com/lelasengupta/snp500-metrics).
+
+This project was created as part of [Kane's Free Data Science Bootcamp](https://bootcamp.davidkane.info).

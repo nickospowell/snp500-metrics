@@ -2,3 +2,6 @@
 title: "Sources"
 ---
 
+I collected my data from ["S&P 500 Companies with Financial Information"](https://www.kaggle.com/datasets/paytonfisher/sp-500-companies-with-financial-information), uploaded to Kaggle by Payton Fisher in July 2020. To clean this dataset, I filtered out extreme outliers from the valuation multipliers by calculating their IQR and defining thresholds for outliers as 1.5 times the IQR. I also removed non-finite EBITDA values and added a column dividing earnings per share by share price. 
+
+I used ChatGPT to assist with my code. 
