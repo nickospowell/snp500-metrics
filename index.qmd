@@ -3,13 +3,6 @@ title: "Financial Metrics of S&P 500 Companies"
 execute:
   echo: FALSE
 ---
-**Overview**
-
-Financial metrics, numbers used to evaluate the performance of stocks, vary significantly by industry. This was sourced from a dataset using data from S&P 500 companies in the July 2020. Relevant columns were used to analyze the relationship between slower and faster growing sectors and two popular financial metrics: market capitalization and earnings per share. The analysis found that slower growing sectors such as consumer staples experience less volatility in earnings, but have lower market capitalizations.
-
-**What is the S&P 500?**
-
-The S&P 500 is one of the most widely-used US stock market indexes. It includes 503 leading publicly traded companies in the US, and has been used to provide insight into the direction of the stock market as a whole.
 
 ```{r}
 #| label: setup
@@ -56,18 +49,16 @@ financials_filtered <- financials |>
 #| label: market_cap_to_eps
 #| message: false
 
-#fix the scale
-
 f <- financials_filtered |>
 ggplot(aes(x = market_cap,
-           y = percent_eps)) +
+           y = percent_eps,
+           color = sector)) +
 geom_point(alpha = 0.5, size = 0.7) +
-facet_wrap(~sector) +
 geom_smooth(se = FALSE,
             formula = 'y ~ x',
             method = lm) +
  scale_x_continuous(labels = label_dollar(scale = 1/10^9,                              suffix = "B"),
-                    breaks = seq(0, 200e12, by = 200e9)) +
+                    breaks = seq(0, 200e12, by = 100e9)) +
  scale_y_continuous(labels = scales::percent) +
 labs(title = "Market Cap vs Earnings per Share by Sector",
      subtitle = "Earnings per share does not increase with market cap or sector",
@@ -80,3 +71,10 @@ theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ggplotly(f)
 ```
 
+**Overview**
+
+Trends in metrics used to determine stock performance vary significantly by sector. This project uses data from S&P 500 companies in July 2020. Columns relating to popular financial metrics, including earnings per share and market capitalization, were used to analyze trends throughout different sectors. Earnings per share increases with market capitalization in sectors experiencing consistent levels of demand. 
+
+**What is the S&P 500?**
+
+The S&P 500 is one of the most widely-used US stock market indexes. It includes 503 leading publicly traded companies in the US, and has been used to provide insight into the direction of the stock market as a whole.
