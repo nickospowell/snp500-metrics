@@ -1,0 +1,67 @@
+---
+title: "Price-to-Book Ratio by Sector"
+execute:
+  echo: false
+---
+
+The **price-to-book** ratio is a company's current share price divided by its book value, or net assets, per share. Essentially, this ratio compares a company's net worth to the value given to it by the market. A high price-to-book ratio could suggest that a stock is overvalued, while a low price-to-book ratio could suggest the opposite. 
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(scales)
+
+financials <- 
+read_csv("financials.csv") |>
+janitor::clean_names() |>
+mutate(percent_eps = earnings_share / price)
+
+#removed outliers to better visualize eps
+Q1 <- quantile(financials$percent_eps, 0.25, na.rm = TRUE)
+Q3 <- quantile(financials$percent_eps, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower <- Q1 - 3 * IQR
+upper <- Q3 + 3 * IQR
+
+#removed outliers for price_earnings
+Q1 <- quantile(financials$price_earnings, 0.25, na.rm = TRUE)
+Q3 <- quantile(financials$price_earnings, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower1 <- Q1 - 3 * IQR
+upper1 <- Q3 + 3 * IQR
+
+#removed outliers for price_book 
+Q1 <- quantile(financials$price_book, 0.25, na.rm = TRUE)
+Q3 <- quantile(financials$price_book, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower2 <- Q1 - 3 * IQR
+upper2 <- Q3 + 3 * IQR
+
+#removing all outliers
+financials_filtered <- financials |>
+  filter(percent_eps >= lower, percent_eps <= upper,
+         price_earnings >= lower1, price_earnings <=              upper1, price_book >= lower2, price_book <=              upper2)
+
+#removing non-finite values
+financials_filtered2 <- financials_filtered %>%
+  filter(is.finite(ebitda) & is.finite(price_earnings) & ebitda > 0)
+```
+
+
+```{r}
+#| label: sector to pb 
+#| message: false
+
+financials_filtered |>
+  ggplot(aes(x = price_book, y = fct_reorder(sector, price_book,
+                                             .na_rm = TRUE))) +
+  geom_boxplot() + scale_x_continuous(breaks = seq(0, 20, by = 2)) +
+  coord_cartesian(xlim = c(0, 20), expand = FALSE) +
+    labs(title = "Price/Book Ratio by Sector",
+       x = "Price/Book",
+       y = NULL) +
+  theme_minimal()
+```
+
