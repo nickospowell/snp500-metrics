@@ -44,7 +44,7 @@ financials_filtered <- financials |>
 
 ```
 
-The **price-to-earnings** ratio is a company's current share price divided by its earnings per share.A high price-to-earnings ratio could suggest that a stock's market price is high compared to its earnings. This could imply the stock is overvalued or that investors expect the stock to grow in the near future. A low price-to-earnings ratio could suggest the opposite.
+The **price-to-earnings** ratio is a company's current share price divided by its earnings per share. A high price-to-earnings ratio suggests that a stock's market price is high compared to its earnings. This could imply the stock is overvalued or that investors expect the stock to grow in the near future. A low price-to-earnings ratio could suggest the opposite. The energy and materials sectors, each highly sensitive to shifts in the economy and global politics, have the highest median price-to-earnings ratios. 
 
 ```{r}
 #| label: sector_to_pe
@@ -54,7 +54,7 @@ The **price-to-earnings** ratio is a company's current share price divided by it
 financials_filtered |>
   ggplot(aes(x = price_earnings,
              y = fct_reorder(sector, price_earnings)))+
-  geom_boxplot() +
+  geom_boxplot(fill = "light blue", alpha = 0.5) +
   scale_x_continuous(breaks = seq(0, 60, by = 4)) +
   coord_cartesian(xlim = c(0, 60), expand = FALSE) +
   labs(title = "Price/Earnings Ratio by Sector",

@@ -4,7 +4,7 @@ execute:
   echo: false
 ---
 
-The **price-to-book** ratio is a company's current share price divided by its book value, or net assets, per share. Essentially, this ratio compares a company's net worth to the value given to it by the market. A high price-to-book ratio could suggest that a stock is overvalued, while a low price-to-book ratio could suggest the opposite. 
+The **price-to-book** ratio is a company's current share price divided by its book value, or net assets, per share. Essentially, this ratio compares a company's net worth to the value given to it by the market. A high price-to-book ratio could suggest that a stock is overvalued, while a low price-to-book ratio could suggest the opposite. Information technology has the highest median price-to-book ratio, while financials has the lowest, possibly due to the amount of assets companies in each sector tend to have. 
 
 ```{r}
 #| label: setup
@@ -57,7 +57,7 @@ financials_filtered2 <- financials_filtered %>%
 financials_filtered |>
   ggplot(aes(x = price_book, y = fct_reorder(sector, price_book,
                                              .na_rm = TRUE))) +
-  geom_boxplot() + scale_x_continuous(breaks = seq(0, 20, by = 2)) +
+  geom_boxplot(fill = "light blue", alpha = 0.5) + scale_x_continuous(breaks = seq(0, 20, by = 2)) +
   coord_cartesian(xlim = c(0, 20), expand = FALSE) +
     labs(title = "Price/Book Ratio by Sector",
        x = "Price/Book",

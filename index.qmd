@@ -76,6 +76,7 @@ ggplotly(f)
 ```
 
 **Overview**
+
 Trends in financial metrics used to evaluate stock performance vary significantly by sector. This project uses data from S&P 500 companies in July 2020. Commonly used financial metrics, such as earnings per share and market capitalization, were used to analyze trends throughout different stock market sectors. Earnings per share increases with market capitalization in sectors experiencing high or stable demand. 
 
 **What is the S&P 500?**
