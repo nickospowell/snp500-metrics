@@ -2,6 +2,6 @@
 title: "Sources"
 ---
 
-I collected my data from ["S&P 500 Companies with Financial Information"](https://www.kaggle.com/datasets/paytonfisher/sp-500-companies-with-financial-information), uploaded to Kaggle by Payton Fisher in July 2020. To clean this dataset, I filtered out extreme outliers from valuation multipliers by calculating their IQR and defining outlier thresholds. I also created a column for percent earnings per share by dividing earnings per share by earnings price.
+I collected my data from ["S&P 500 Companies with Financial Information"](https://www.kaggle.com/datasets/paytonfisher/sp-500-companies-with-financial-information), uploaded to Kaggle by Payton Fisher in July 2020. To alter this dataset, I first created a column for percent earnings per share by dividing earnings per share by earnings price. I then filtered out extreme outliers from each financial ratio used in this project. 
 
 I used ChatGPT to assist with my code. 

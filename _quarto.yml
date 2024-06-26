@@ -7,7 +7,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - multiples.qmd
+      - href: multiples.qmd
+        text: Price/Earnings
+      - href: price-book.qmd
+        text: Price/Book
       - about.qmd
       - sources.qmd
 

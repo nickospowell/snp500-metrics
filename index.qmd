@@ -21,22 +21,22 @@ mutate(percent_eps = earnings_share / price)
 Q1 <- quantile(financials$percent_eps, 0.25, na.rm = TRUE)
 Q3 <- quantile(financials$percent_eps, 0.75, na.rm = TRUE)
 IQR <- Q3 - Q1
-lower <- Q1 - 1.5 * IQR
-upper <- Q3 + 1.5 * IQR
+lower <- Q1 - 3 * IQR
+upper <- Q3 + 3 * IQR
 
 #removed outliers for price_earnings
 Q1 <- quantile(financials$price_earnings, 0.25, na.rm = TRUE)
 Q3 <- quantile(financials$price_earnings, 0.75, na.rm = TRUE)
 IQR <- Q3 - Q1
-lower1 <- Q1 - 1.5 * IQR
-upper1 <- Q3 + 1.5 * IQR
+lower1 <- Q1 - 3 * IQR
+upper1 <- Q3 + 3 * IQR
 
 #removed outliers for price_book 
 Q1 <- quantile(financials$price_book, 0.25, na.rm = TRUE)
 Q3 <- quantile(financials$price_book, 0.75, na.rm = TRUE)
 IQR <- Q3 - Q1
-lower2 <- Q1 - 1.5 * IQR
-upper2 <- Q3 + 1.5 * IQR
+lower2 <- Q1 - 3 * IQR
+upper2 <- Q3 + 3 * IQR
 
 #removing all outliers
 financials_filtered <- financials |>
@@ -49,6 +49,9 @@ financials_filtered <- financials |>
 #| label: market_cap_to_eps
 #| message: false
 
+#adjusted point size from 1 to 0.7
+#adjusted x axis scale to dollars in billions, changed scale from 100 to 400 to make it easier to read
+#added lines of best fit to better observe trends
 f <- financials_filtered |>
 ggplot(aes(x = market_cap,
            y = percent_eps,
@@ -68,12 +71,12 @@ labs(title = "Market Cap vs Earnings per Share by Sector",
 theme_minimal() +
 theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
+#code for interactive graph, easier to view trends for specific sectors
 ggplotly(f)
 ```
 
 **Overview**
-
-Trends in metrics used to determine stock performance vary significantly by sector. This project uses data from S&P 500 companies in July 2020. Columns relating to popular financial metrics, including earnings per share and market capitalization, were used to analyze trends throughout different sectors. Earnings per share increases with market capitalization in sectors experiencing consistent levels of demand. 
+Trends in financial metrics used to evaluate stock performance vary significantly by sector. This project uses data from S&P 500 companies in July 2020. Commonly used financial metrics, such as earnings per share and market capitalization, were used to analyze trends throughout different stock market sectors. Earnings per share increases with market capitalization in sectors experiencing high or stable demand. 
 
 **What is the S&P 500?**
 
