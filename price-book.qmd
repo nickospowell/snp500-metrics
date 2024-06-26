@@ -4,7 +4,7 @@ execute:
   echo: false
 ---
 
-The **price-to-book** ratio is a company's current share price divided by its book value, or net assets, per share. Essentially, this ratio compares a company's net worth to the value given to it by the market. A high price-to-book ratio could suggest that a stock is overvalued, while a low price-to-book ratio could suggest the opposite. Information technology has the highest median price-to-book ratio, while financials has the lowest, possibly due to the amount of assets companies in each sector tend to have. 
+The **price-to-book** ratio is a company's current share price divided by its book value, or net assets, per share. Essentially, this ratio compares a company's net worth to the value given to it by the market. A high price-to-book ratio could suggest that a stock is overvalued, while a low price-to-book ratio could suggest the opposite. Information technology has the highest median price-to-book ratio, while financials has the lowest, possibly due to the amount of assets companies in these sectors tend to have. 
 
 ```{r}
 #| label: setup
